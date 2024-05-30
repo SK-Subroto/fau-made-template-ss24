@@ -26,11 +26,11 @@ This data science initiative will examine library visits in Chicago using 2018 d
 This data source contains Chicago's library visitor data generated in 2018.
 
 ### Datasource2: Weather and Climate Data of London
-* Metadata URL: [https://www.visualcrossing.com/weather/weather-data-services](https://www.visualcrossing.com/weather/weather-data-services)
-* Sample Data URL: [https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/retrievebulkdataset?&key=62G5GK5U8LGWQHURAMBAZE6CF&taskId=f4c31e40d2e716f3ef71821413d86d28&zip=false](https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/retrievebulkdataset?&key=62G5GK5U8LGWQHURAMBAZE6CF&taskId=f4c31e40d2e716f3ef71821413d86d28&zip=false)
+* Metadata URL: [https://meteostat.net/en/place/us/chicago?s=72534&t=2018-01-01/2018-12-31](https://meteostat.net/en/place/us/chicago?s=72534&t=2018-01-01/2018-12-31)
+* Sample Data URL: [https://bulk.meteostat.net/v2/hourly/72534.csv.gz](https://bulk.meteostat.net/v2/hourly/72534.csv.gz)
 * Data Type: CSV
 
-This data source will provide weather and climate data in Chicago, including datetime, tempmax, feellinke, humidity, max_temp, mean_temp, snow, couldcover, visibility, snow_depth, sunrise, sunset, etc.
+This data source will provide weather and climate data in Chicago, including date, tavg, tmax, tmin, snow, prcp, wspd, etc.
 
 ## Work Packages
 
