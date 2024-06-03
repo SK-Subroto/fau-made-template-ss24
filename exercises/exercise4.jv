@@ -54,15 +54,15 @@ pipeline WeatherPipeline {
       "producer" oftype text,
       "model" oftype text,
       "month" oftype integer,
-      "temperatur" oftype decimal,
+      "temperature" oftype decimal,
       "battery_temperature" oftype decimal
     ];
   }
 
   // Applies the temperature conversion transformation to the 'Temperatur' column
   block TransformerA oftype TableTransformer {
-    inputColumns: ['temperatur'];
-    outputColumn: 'temperatur';
+    inputColumns: ['temperature'];
+    outputColumn: 'temperature';
     use: TempConvert;  // Using the defined transformation
   }
 
