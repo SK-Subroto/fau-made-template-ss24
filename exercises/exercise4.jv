@@ -1,14 +1,4 @@
-  // Transformation definition to convert Celsius to Fahrenheit
-  transform TempConvert {
-    from tempCelsius oftype decimal;
-    to tempFahrenheit oftype decimal;
-
-    // Conversion formula
-    tempFahrenheit: (tempCelsius * 9/5) + 32;
-  }
-
-
-pipeline WeatherPipeline {
+  pipeline WeatherPipeline {
   // Extracts weather data from a specified URL
   block WeatherExtractor oftype HttpExtractor {
     url: "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip";
@@ -46,7 +36,7 @@ pipeline WeatherPipeline {
     constraint PositiveRange oftype RangeConstraint { lowerBound: 0; lowerBoundInclusive: false;}
     valuetype PositiveInteger oftype integer { constraints: [ PositiveRange ]; }
 
-  // Interprets the selected data as a table without headers
+    // Converts Tempareture Sheet to Table and dropped unnecessary columns and rename headers (In: Sheet, Out: Table)
   block WeatherTableInterpreter oftype TableInterpreter {
     header: false;
     columns: [
@@ -57,6 +47,15 @@ pipeline WeatherPipeline {
       "temperature" oftype decimal,
       "battery_temperature" oftype decimal
     ];
+  }
+
+  // Transformation definition to convert Celsius to Fahrenheit
+  transform TempConvert {
+    from tempCelsius oftype decimal;
+    to tempFahrenheit oftype decimal;
+
+    // Conversion formula
+    tempFahrenheit: (tempCelsius * 9/5) + 32;
   }
 
   // Applies the temperature conversion transformation to the 'Temperatur' column
@@ -82,7 +81,7 @@ pipeline WeatherPipeline {
 
 
 
-  // Pipeline execution order
+  // Build a chain of all the TempareturePipeline's blocks
   WeatherExtractor
   -> ZipInterpreter
   -> WeatherFilePicker

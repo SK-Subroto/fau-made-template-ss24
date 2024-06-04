@@ -9,7 +9,7 @@ pipeline GoodsPipeline {
     block GoodsTextFileInterpreter oftype TextFileInterpreter { encoding: "latin2"; }
 
     // Select the appropriate range from Goods TextFile, ignore metadata (In: TextFile, Out: TextFile)
-    block GoodsTextRangeSelector oftype TextRangeSelector { lineFrom: 8; lineTo: 41336; }
+    block GoodsTextRangeSelector oftype TextRangeSelector { lineFrom: 7; lineTo: 41336; }
 
     // Converts Goods TextFile to Sheet (In: TextFile, Out: Sheet)
     block GoodsCSVInterpreter oftype CSVInterpreter { delimiter: ";"; }
@@ -47,6 +47,7 @@ pipeline GoodsPipeline {
         outputColumn: 'month';
         use: convertUppercaseJanuar;
     }
+
     transform convertUppercaseFebruar
     {
         from inputName oftype text;
@@ -58,6 +59,19 @@ pipeline GoodsPipeline {
         inputColumns: ['month'];
         outputColumn: 'month';
         use: convertUppercaseFebruar;
+    }
+
+    transform convertUppercaseMarz
+    {
+        from inputName oftype text;
+        to outputName oftype text;
+        outputName: inputName replace /März/ with 'MÄRZ';
+    }
+    block convertUppercaseMarz oftype TableTransformer
+    {
+        inputColumns: ['month'];
+        outputColumn: 'month';
+        use: convertUppercaseMarz;
     }
 
     // Converts Goods Sheet to Table and dropped unnecessary columns (In: Sheet, Out: Table)
@@ -90,6 +104,7 @@ pipeline GoodsPipeline {
         -> GoodsTableInterpreter
         -> convertUppercaseJanuar
         -> convertUppercaseFebruar
+        -> convertUppercaseMarz
         -> GoodsLoader;
 
 }
