@@ -9,7 +9,7 @@ pipeline GoodsPipeline {
     block GoodsTextFileInterpreter oftype TextFileInterpreter { encoding: "latin2"; }
 
     // Select the appropriate range from Goods TextFile, ignore metadata (In: TextFile, Out: TextFile)
-    block GoodsTextRangeSelector oftype TextRangeSelector { lineFrom: 7; lineTo: 41336; }
+    block GoodsTextRangeSelector oftype TextRangeSelector { lineFrom: 8; lineTo: 41336; }
 
     // Converts Goods TextFile to Sheet (In: TextFile, Out: Sheet)
     block GoodsCSVInterpreter oftype CSVInterpreter { delimiter: ";"; }
