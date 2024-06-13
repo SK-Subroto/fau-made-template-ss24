@@ -33,8 +33,11 @@
   }
 
   // Data validation for other columns
-    constraint PositiveRange oftype RangeConstraint { lowerBound: 0; lowerBoundInclusive: false;}
-    valuetype PositiveInteger oftype integer { constraints: [ PositiveRange ]; }
+  constraint PositiveRange oftype RangeConstraint { 
+    lowerBound: 0; 
+    lowerBoundInclusive: false;
+  }
+  valuetype PositiveInteger oftype integer { constraints: [ PositiveRange ]; }
 
     // Converts Tempareture Sheet to Table and dropped unnecessary columns and rename headers (In: Sheet, Out: Table)
   block WeatherTableInterpreter oftype TableInterpreter {
@@ -78,9 +81,7 @@
     file: "./temperatures.sqlite";
     dropTable: false;
   }
-
-
-
+  
   // Build a chain of all the TempareturePipeline's blocks
   WeatherExtractor
   -> ZipInterpreter

@@ -1,0 +1,77 @@
+pipeline GTFSPipeline {
+
+    // Extracts weather data from a specified URL
+    block GTFSExtractor oftype HttpExtractor {
+        url: "https://gtfs.rhoenenergie-bus.de/GTFS.zip";
+    }
+
+    // Interprets the downloaded file as a ZIP archive
+    block ZipFileInterpreter oftype ArchiveInterpreter {
+        archiveType: "zip";
+    }
+
+    // Picks a specific file from the extracted contents
+    block StopsText oftype FilePicker {
+        path: "/stops.txt";
+    }
+
+    // Interprets the chosen file as a txt file
+    block StopsTextInterpreter oftype TextFileInterpreter {}
+
+    block CSVDataParser oftype CSVInterpreter {
+        enclosing: '"';
+        enclosingEscape: '"';
+    }
+
+    // Data validation for Zone
+    valuetype ZoneType oftype integer {
+    constraints: [Zone1645];
+    }
+
+    constraint Zone1645 oftype RangeConstraint {
+        lowerBound: 1645;
+        lowerBoundInclusive: true;
+        upperBound: 1645;
+        upperBoundInclusive: true;
+    }
+
+    // Data validation for Coordinate
+    valuetype CoordinateType oftype decimal {
+        constraints: [LatLonRange];
+    }
+
+    constraint LatLonRange oftype RangeConstraint {
+        lowerBound: -90;
+        lowerBoundInclusive: true;
+        upperBound: 90;
+        upperBoundInclusive: true;
+    }
+    
+    // Converts Stops Sheet to Table and dropped unnecessary columns and rename headers (In: Sheet, Out: Table) 
+    block StopsMapping oftype TableInterpreter {
+        header: true;
+        columns: [
+            "stop_id" oftype integer,
+            "stop_name" oftype text,
+            "stop_lat" oftype CoordinateType,
+            "stop_lon" oftype CoordinateType,
+            "zone_id" oftype ZoneType,
+        ];
+    }
+
+    // Loads the processed data into an SQLite table
+    block StopsLoader oftype SQLiteLoader {
+        table: "stops";
+        file: "./gtfs.sqlite";
+    }
+
+    // Build a chain of all the GTFSPipeline's blocks
+    GTFSExtractor
+        -> ZipFileInterpreter
+        -> StopsText
+        -> StopsTextInterpreter
+        -> CSVDataParser
+        -> StopsMapping
+        -> StopsLoader;
+
+}
