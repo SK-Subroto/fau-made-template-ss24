@@ -20,7 +20,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r project/requirements.txt
         
-    - name: Run tests
+    - name: Run test
       run: |
         chmod +x project/test.sh
-        project/tests.sh
+        project/test.sh
