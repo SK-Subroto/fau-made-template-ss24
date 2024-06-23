@@ -1,6 +1,16 @@
 name: Data Pipeline CI
 
-on: [push, pull_request]
+on: 
+  push:
+    paths:
+      - 'project/**'
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+    branches:
+      - main
 
 jobs:
   test:
