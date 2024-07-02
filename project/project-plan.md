@@ -25,7 +25,7 @@ This data science initiative will examine library visits in Chicago using 2018 d
 
 This data source contains Chicago's library visitor data generated in 2018.
 
-### Datasource2: Weather and Climate Data of London
+### Datasource2: Weather and Climate Data of Chicago
 * Metadata URL: [https://meteostat.net/en/place/us/chicago?s=72534&t=2018-01-01/2018-12-31](https://meteostat.net/en/place/us/chicago?s=72534&t=2018-01-01/2018-12-31)
 * Sample Data URL: [https://bulk.meteostat.net/v2/hourly/72534.csv.gz](https://bulk.meteostat.net/v2/hourly/72534.csv.gz)
 * Data Type: CSV
