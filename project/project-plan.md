@@ -1,7 +1,7 @@
 # Project Plan
 
 ## Title
-Library visit in Chicago
+Impact of Weather on Library visit in Chicago
 
 ## Main Question
 
